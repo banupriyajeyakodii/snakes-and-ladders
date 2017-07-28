@@ -20,7 +20,7 @@ RSpec.describe 'Snakes_and_ladders' do
   context 'play' do
     it 'should allow token inside the board only if event 1 from dice' do
       game.outcome = 1
-      game.enter(p0x0, :X)
+      game.enter(:X)
       expect(game.token_at(p0x0)).to include(:X)
     end
     it 'should place(move) tokens according to dice event' do
@@ -44,6 +44,12 @@ RSpec.describe 'Snakes_and_ladders' do
       expect(game.token_at(p1x8)).to include(:X)
       game.move(:X, 2, p2x6)
       expect(game.token_at(p3x2)).to include(:X)
+    end
+    it 'shoul call' do
+      check = Console.new
+      x = check.a
+      byebug
+    end
     end
   end
   context 'win Scenario'do
