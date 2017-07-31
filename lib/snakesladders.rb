@@ -5,8 +5,8 @@ class SnakesLadders
     @token1 = token1
     @token2 = token2
     @outcome = outcome
-    @origin = Position.new(0,0)
     @board = Array.new(10){ Array.new(10){|x| x = []}}
+    @origin = @board[0][0]
     @current_position = nil
     @snakes_and_ladders = {
               Position.new(5,2) => Position.new(1,8), Position.new(6,8) => Position.new(3,2), Position.new(9,7) => Position.new(0,4), 
@@ -14,22 +14,23 @@ class SnakesLadders
               Position.new(0,7) => Position.new(5,6), Position.new(2,8) => Position.new(3,4), Position.new(4,2) => Position.new(7,6),
               Position.new(1,2) => Position.new(4,4), Position.new(5,1) => Position.new(9,3), Position.new(6,5) => Position.new(8,5) }
   end
+
   
-  def roll_dice
-    @outcome = 1 + rand(6)
-  end
+  # def roll_dice
+  #   @outcome = rand(1..6)
+  # end
 
   def enter(token)
     unless (@board.flatten.include?(token))
       if(@outcome == 1)
         @origin << token
         @current_position = @origin
-        true
+        check = 1
       else
-        false
+        check = -1
       end
     else
-        false
+        check = 0
     end
   end
 
