@@ -1,9 +1,8 @@
 class SnakesLadders
-  attr_accessor :token1, :token2, :board, :outcome, :origin
+  attr_accessor :player_token, :board, :outcome, :origin
   attr_reader :snakes, :ladders, :snakes_and_ladders
-  def initialize(token1, token2)
-    @token1 = token1
-    @token2 = token2
+  def initialize(*player_token)
+    @player_token = player_token
     @outcome = outcome
     @board = Array.new(10){ Array.new(10){|x| x = []}}
     @origin = @board[0][0]
@@ -14,6 +13,12 @@ class SnakesLadders
               Position.new(0,7) => Position.new(5,6), Position.new(2,8) => Position.new(3,4), Position.new(4,2) => Position.new(7,6),
               Position.new(1,2) => Position.new(4,4), Position.new(5,1) => Position.new(9,3), Position.new(6,5) => Position.new(8,5) }
   end
+  
+
+  def make_wormhole
+
+  end
+            
 
   
   # def roll_dice

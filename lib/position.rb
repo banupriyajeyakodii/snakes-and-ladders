@@ -4,6 +4,12 @@ class Position
     @y = y
   end
 
+  def of(number)      # => factory method
+    @x = number / 10
+    @y = (number % 10) - 1
+    self
+  end
+
   def +(steps)
     move = @y + steps
     @x = @x + move / 10

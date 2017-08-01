@@ -1,6 +1,6 @@
 class Dice
   attr_accessor :outcome
   def initialize
-    @outcome = outcome
+    @outcome = rand(1..6)
   end
 end

@@ -1,75 +1,93 @@
 RSpec.describe 'Snakes_and_ladders' do
+  # let(:game) {SnakesLadders.new(token)}
+  let(:position) {Position.new(0,0)}
+  let(:dice_event) {double(Dice)}
+  let(:game) {double(SnakesLadders.new, :player_token => [:X, :Y, :Z])}
+  let(:dice) {double()}
+  let(:p1)  {position.of(1) }
+  let(:p4)  {position.of(4) }
+  let(:p6)  {position.of(6) }
+  let(:p9)  {position.of(9) }
+  let(:p12) {position.of(12)}
+  let(:p13) {position.of(13)}
+  let(:p19) {position.of(19)}
+  let(:p27) {position.of(27)}
+  let(:p35) {position.of(35)}
+  let(:p51) {position.of(51)}
+  let(:p97) {position.of(97)}
+  # before(:each) do
+  #   tokens = double()
+  #   game.player_token = [:X, :Y, :Z]
+  # end
 
-  let(:game) {SnakesLadders.new(:X, :Y)}
-  let(:dice_event) {double()}                    
-  let(:dice) {Dice.new}
-  let(:p0x0) {Position.new(0,0)}
-  let(:p0x3) {Position.new(0,3)}
-  let(:p0x5) {Position.new(0,5)}
-  let(:p0x8) {Position.new(0,8)}
-  let(:p1x1) {Position.new(1,1)}
-  let(:p1x2) {Position.new(1,2)}
-  let(:p1x8) {Position.new(1,8)}
-  let(:p2x6) {Position.new(2,6)}
-  let(:p3x4) {Position.new(3,4)}
-  let(:p5x0) {Position.new(5,0)}
-  let(:p9x6) {Position.new(9,6)}
+  it 'should get one'do
+    dice.allow(:roll).to recieve(1).
+    expect(dice.roll).to eq(1)
+  end
+  it 'should get token'do
+    # game.allow(:player_token[0]).to recieve(:X)
+    expect(game.player_token[0]).to be(:X)
+  end
+  # it 'should assign tokens to players' do
+  #   tokens.
+  # end
+  # context 'play' do
+  #     before (:each) do
+  #       dice_event.stub(:one)   .and_return(1)
+  #       dice_event.stub(:two)   .and_return(2)
+  #       dice_event.stub(:three) .and_return(3)
+  #       dice_event.stub(:four)  .and_return(4)
+  #       dice_event.stub(:five)  .and_return(5)
+  #       dice_event.stub(:six)   .and_return(6)
+  #     end
+  #   it 'should allow token inside the board only if event 1 from dice' do
+  #     game.listener { |event_type, data|
+  #       expect(event_type).to be(:entry)
+  #       expect(data.player).to be(:X)
+  #     }
+  #     # game.outcome = dice_event.one
+  #     game.enter(:X)
+  #     game.move(:X, dice_event.one)
+  #     expect(game.position_of(:X)).to eq(p1)
+  #   end
 
-  it 'should assign tokens to players' do
-    expect(game.token1).to be(:X)
-    expect(game.token2).to be(:Y)
-  end
-  context 'play' do
-      before (:each) do
-        dice_event.stub(:one)   .and_return(1)
-        dice_event.stub(:two)   .and_return(2)
-        dice_event.stub(:three) .and_return(3)
-        dice_event.stub(:four)  .and_return(4)
-        dice_event.stub(:five)  .and_return(5)
-        dice_event.stub(:six)   .and_return(6)
-      end
-    it 'should allow token inside the board only if event 1 from dice' do
-      game.outcome = dice_event.one
-      game.enter(:X)
-      expect(game.token_at(p0x0)).to include(:X)
-    end
-    it 'should place(move) tokens according to dice event' do
-      game.move(:X, dice_event.three, p0x8)
-      expect(game.token_at(p1x1)).to include(:X)
-    end
-    it 'should allow the current player to play one more time only if event 6 from dice' do
-      expect{ game.move(:X, dice_event.six, p1x2) }.to raise_error("X takes another turn.")
-    end
-    it 'should allow multiple tokens in a cell' do
-      game.move(:Y, dice_event.five, p0x3)
-      game.move(:X, dice_event.three, p0x5)
-      expect(game.token_at(p0x8)).to include(:Y, :X)
-    end
-    it 'should not keep the token in the previous position' do
-      game.move(:X, dice_event.four, p0x8)
-      expect(game.token_at(p0x8)).not_to include(:X)
-    end
-    it 'should move the token according to corresponding Snakes and ladders' do
-      game.move(:X, dice_event.two, p5x0)
-      expect(game.token_at(p1x8)).to include(:X)
-      game.move(:X, dice_event.two, p2x6)
-      expect(game.token_at(p3x4)).to include(:X)
-    end
-    # it 'shoul call' do
-    #   check = Console.new
-    #   x = check.a
-    #   byebug
-    # end
-    # end
-  end
-  context 'win Scenario'do
-    it 'should decalre win if current player token placed in 100th cell' do
+  #   [1..6].each do |number|
+  #     it 'should move #{number} position from current position' do
+  #       SnakesLadders.set_board({players:{X: 4, Y: 20}, current_player: :Y})
+  #     end
+  #   end
+
+  #   it 'should place(move) tokens according to dice event' do
+  #     game.move(:X, dice_event.three, p0x8)
+  #     expect(game.token_at(p12)).to include(:X)
+  #   end
+  #   it 'should allow the current player to play one more time only if event 6 from dice' do
+  #     expect{ game.move(:X, dice_event.six, p13) }.to raise_error("X takes another turn.")
+  #   end
+  #   it 'should allow multiple tokens in a cell' do
+  #     game.move(:Y, dice_event.five, p04)
+  #     game.move(:X, dice_event.three, p06)
+  #     expect(game.token_at(p0x8)).to include(:Y, :X)
+  #   end
+  #   it 'should not keep the token in the previous position' do
+  #     game.move(:X, dice_event.four, p09)
+  #     expect(game.token_at(p0x8)).not_to include(:X)
+  #   end
+  #   it 'should move the token according to corresponding Snakes and ladders' do
+  #     game.move(:X, dice_event.two, p51)
+  #     expect(game.token_at(p19)).to include(:X)
+  #     game.move(:X, dice_event.two, p2x6)
+  #     expect(game.token_at(p35)).to include(:X)
+  #   end
+  # end
+  # context 'win Scenario'do
+  #   it 'should decalre win if current player token placed in 100th cell' do
       
-      # game.listener {|event|
-      # expect(event).to be_a(WinEvent)
-      # expect(event.winner).to be(:X)
-      # }
-      # game.move(:X, 3, p9x6)
-    end
-  end
+  #     game.listener {|event|
+  #     expect(event).to be_a(WinEvent)
+  #     expect(event.winner).to be(:X)
+  #     }
+  #     game.move(:X, 3, p99)
+  #   end
+  # end
 end
