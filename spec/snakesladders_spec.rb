@@ -1,9 +1,13 @@
 RSpec.describe 'Snakes_and_ladders' do
   # let(:game) {SnakesLadders.new(token)}
   let(:position) {Position.new(0,0)}
+  let(:dice) {Dice.new}
   let(:dice_event) {double(Dice)}
   let(:game) {double(SnakesLadders.new, :player_token => [:X, :Y, :Z])}
-  let(:dice) {double()}
+  let(:token1) {game.player_token[0]}
+  let(:token2) {game.player_token[1]}
+  let(:token3) {game.player_token[2]}
+  let(:p0)  {position.of(0) }
   let(:p1)  {position.of(1) }
   let(:p4)  {position.of(4) }
   let(:p6)  {position.of(6) }
@@ -15,47 +19,25 @@ RSpec.describe 'Snakes_and_ladders' do
   let(:p35) {position.of(35)}
   let(:p51) {position.of(51)}
   let(:p97) {position.of(97)}
-  # before(:each) do
-  #   tokens = double()
-  #   game.player_token = [:X, :Y, :Z]
-  # end
 
-  it 'should get one'do
-    dice.allow(:roll).to recieve(1).
-    expect(dice.roll).to eq(1)
-  end
-  it 'should get token'do
-    # game.allow(:player_token[0]).to recieve(:X)
-    expect(game.player_token[0]).to be(:X)
-  end
-  # it 'should assign tokens to players' do
-  #   tokens.
-  # end
-  # context 'play' do
-  #     before (:each) do
-  #       dice_event.stub(:one)   .and_return(1)
-  #       dice_event.stub(:two)   .and_return(2)
-  #       dice_event.stub(:three) .and_return(3)
-  #       dice_event.stub(:four)  .and_return(4)
-  #       dice_event.stub(:five)  .and_return(5)
-  #       dice_event.stub(:six)   .and_return(6)
-  #     end
-  #   it 'should allow token inside the board only if event 1 from dice' do
-  #     game.listener { |event_type, data|
-  #       expect(event_type).to be(:entry)
-  #       expect(data.player).to be(:X)
-  #     }
-  #     # game.outcome = dice_event.one
-  #     game.enter(:X)
-  #     game.move(:X, dice_event.one)
-  #     expect(game.position_of(:X)).to eq(p1)
-  #   end
+  context 'play' do
+    before (:each) do
+      dice_event.stub(:one)   .and_return(1)
+      dice_event.stub(:two)   .and_return(2)
+      dice_event.stub(:three) .and_return(3)
+      dice_event.stub(:four)  .and_return(4)
+      dice_event.stub(:five)  .and_return(5)
+      dice_event.stub(:six)   .and_return(6)
+    end
 
-  #   [1..6].each do |number|
-  #     it 'should move #{number} position from current position' do
-  #       SnakesLadders.set_board({players:{X: 4, Y: 20}, current_player: :Y})
-  #     end
-  #   end
+    it 'should assign tokens to players' do
+      expect(token1).to be(:X)
+      expect(token2).to be(:Y)
+      expect(token3).to be(:Z)
+    end
+    it 'should not allow token inside the board if dice event is not 1' do
+      expect(game.play(dice_event.one, token1, position_of(token1)))
+    end
 
   #   it 'should place(move) tokens according to dice event' do
   #     game.move(:X, dice_event.three, p0x8)
@@ -89,5 +71,5 @@ RSpec.describe 'Snakes_and_ladders' do
   #     }
   #     game.move(:X, 3, p99)
   #   end
-  # end
+  end
 end

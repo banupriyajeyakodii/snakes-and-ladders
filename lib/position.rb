@@ -2,6 +2,7 @@ class Position
   def initialize(x, y)
     @x = x
     @y = y
+    @game = SnakesLadders.new([])
   end
 
   def of(number)      # => factory method
@@ -15,6 +16,10 @@ class Position
     @x = @x + move / 10
     @y = move % 10
     self
+  end
+
+  def has_wormhole?
+    game.wormhole.has_key?(self)
   end
 
   attr_reader :x, :y
