@@ -1,4 +1,6 @@
 
+Dir["#{Dir.pwd}/lib/*"].each {|f| require f }
+# Dir["#{Dir.pwd}/spec/*"].each {|f| require f }
 require 'byebug'
 require 'rspec/core'
 require 'rspec/expectations'
@@ -16,7 +18,6 @@ require 'rspec/expectations'
 # a separate helper file that requires the additional dependencies and performs
 # the additional setup, and require it from the spec files that actually need
 # it.
-Dir["#{Dir.pwd}/lib/*"].each {|f| require f }
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

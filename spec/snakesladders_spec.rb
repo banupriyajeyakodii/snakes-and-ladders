@@ -1,13 +1,12 @@
-RSpec.describe 'Snakes_and_ladders' do
+RSpec.describe 'SnakesLadders' do
   # let(:game) {SnakesLadders.new(token)}
-  let(:position) {Position.new(0,0)}
+  let(:position) {Game::Position.new(0,0)}
   let(:dice) {Dice.new}
   let(:dice_event) {double(Dice)}
-  let(:game) {double(SnakesLadders.new, :player_token => [:X, :Y, :Z])}
-  let(:token1) {game.player_token[0]}
-  let(:token2) {game.player_token[1]}
-  let(:token3) {game.player_token[2]}
-  let(:p0)  {position.of(0) }
+  let(:game) {double(Game::SnakesLadders.new, :token => [:X, :Y, :Z])}
+  let(:token1) {game.token[0]}
+  let(:token2) {game.token[1]}
+  let(:token3) {game.token[2]}
   let(:p1)  {position.of(1) }
   let(:p4)  {position.of(4) }
   let(:p6)  {position.of(6) }
@@ -20,8 +19,11 @@ RSpec.describe 'Snakes_and_ladders' do
   let(:p51) {position.of(51)}
   let(:p97) {position.of(97)}
 
-  context 'play' do
+  context 'game' do
     before (:each) do
+      # game.board
+      # game.stub(:token_in)    .and_return(true)
+      # game.stub(:token_out)   .and_return(false)
       dice_event.stub(:one)   .and_return(1)
       dice_event.stub(:two)   .and_return(2)
       dice_event.stub(:three) .and_return(3)
@@ -35,31 +37,32 @@ RSpec.describe 'Snakes_and_ladders' do
       expect(token2).to be(:Y)
       expect(token3).to be(:Z)
     end
+    it 'should allow token inside the board if the dice event is 1' do
+      # game.player = token1
+      # # game.stub(:is_in_board?(token1)) { true } 
+      # game.is_in_board? = false
+      # game.outcome = dice_event.one
+      # allow(:play).to receive(player: token1, is_in_board?: false, outcome: 1)
+      # game.play
+      # expect(p1).to include(:Y)
+      
+    end
     it 'should not allow token inside the board if dice event is not 1' do
-      expect(game.play(dice_event.one, token1, position_of(token1)))
+      # game.is_in_board?(token1) = false
+      # game.outcome = dice_event.two
+      # game.play
+      # expect().
+      # expect
     end
 
   #   it 'should place(move) tokens according to dice event' do
-  #     game.move(:X, dice_event.three, p0x8)
-  #     expect(game.token_at(p12)).to include(:X)
   #   end
   #   it 'should allow the current player to play one more time only if event 6 from dice' do
-  #     expect{ game.move(:X, dice_event.six, p13) }.to raise_error("X takes another turn.")
   #   end
   #   it 'should allow multiple tokens in a cell' do
-  #     game.move(:Y, dice_event.five, p04)
-  #     game.move(:X, dice_event.three, p06)
-  #     expect(game.token_at(p0x8)).to include(:Y, :X)
   #   end
-  #   it 'should not keep the token in the previous position' do
-  #     game.move(:X, dice_event.four, p09)
-  #     expect(game.token_at(p0x8)).not_to include(:X)
   #   end
   #   it 'should move the token according to corresponding Snakes and ladders' do
-  #     game.move(:X, dice_event.two, p51)
-  #     expect(game.token_at(p19)).to include(:X)
-  #     game.move(:X, dice_event.two, p2x6)
-  #     expect(game.token_at(p35)).to include(:X)
   #   end
   # end
   # context 'win Scenario'do
