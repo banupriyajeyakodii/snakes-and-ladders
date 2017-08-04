@@ -1,25 +1,24 @@
 RSpec.describe 'Position' do
-    let(:position) { Game::Position.new(2, 3) }
+  
   it 'should provide x and y coordinate by cell number' do
-    position.of(24)
+    position = Game::Position.of(24)
     expect(position.x).to eq(2)
-    expect(position.y).to eq(3)
+    expect(position.y).to eq(4)
   end
+
   it 'should be equal with new position object' do
-    old_object = position.of(24)
-    new_object = Game::Position.new(old_object.x , old_object.y)
-    expect(old_object == new_object).to be_truthy
+    expect(Game::Position.of(24)).to eq(Game::Position.of(24))
   end
-  it 'object should be able to add with an integer' do
-    source = position.of(9)
-    destination = source + 3
-    expected = position.of(12)
-    expect(destination).to eq(expected)
+
+
+  it 'should add to position' do
+    expect(Game::Position.of(24).add(3)).to eq(Game::Position.of(27))
   end
-  it 'should check for any wormhole in given position' do
-    expect(position.of(89).has_wormhole?).to be_truthy
-    expect(position.of(9).has_wormhole?).to be_falsey
+
+  it 'should compare position 24 to be greater than position 22' do
+    expect(Game::Position.of(24)).to be > Game::Position.of(22)
   end
+
   
   
 end

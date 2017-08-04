@@ -1,5 +1,5 @@
 require 'byebug'
-require_relative '/home/robin/git/snakes-and-ladders/lib/snakesladders.rb'
+# require_relative '/home/robin/git/snakes-and-ladders/lib/snakesladders.rb'
 module Game
   class Position
     attr_reader :x, :y
@@ -12,23 +12,26 @@ module Game
       (@x == position.x && @y == position.y)
     end
 
-    def has_wormhole?
-      game = Game::SnakesLadders.new([:X])
-      game.wormhole.keys.any? { |e| e == self}
+    def self.of(number)
+      Position.new(number / 10, number % 10)
     end
 
-    def of(number)
-      @x = number / 10
-      @y = (number % 10) - 1
-      self
+    def add(delta)
+      aggregate = number + delta
+      Position.of(aggregate)
     end
 
-    def +(steps)
-      move = @y + steps
-      @x = @x + move / 10
-      @y = move % 10
-      Position.new(self.x, self.y)
+
+    def number
+      x * 10 + y
     end
+
+    def >(another)
+      self.number > another.number
+    end
+
+
+    NONE = Position.new(0, 0)
 
 
   end
