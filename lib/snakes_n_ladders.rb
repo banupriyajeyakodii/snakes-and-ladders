@@ -2,11 +2,12 @@ class SnakesNLadders
 
   def initialize(dice, first_player, second_player, state = nil)
     @players = [first_player, second_player]
-    @current_player = first_player
     if(state.nil?)
-      @player_positions = {first_player => Game::Position::NONE, second_player => Game::Position::NONE}
+      @player_positions = {first_player => Game::Position::NONE, second_player => Game::Position::NONE }
+    @current_player = first_player
     else
-      @player_positions = {first_player => state[first_player], second_player => state[second_player]}
+      @player_positions = {first_player => state[first_player], second_player => state[second_player], :current_player => current_player}
+    @current_player = state[:current_player]
     end
     @dice = dice
 
@@ -16,9 +17,7 @@ class SnakesNLadders
 
   def play
     outcome = dice.roll()
-    if(position_of(current_player) > Game::Position::NONE)
-      move(current_player, outcome)
-    end
+    (position_of(current_player) > Game::Position::NONE) ? move(current_player, outcome) :  ( move(current_player, outcome) if(outcome == 1))
     change_player() if(outcome != 6)
   end
 
