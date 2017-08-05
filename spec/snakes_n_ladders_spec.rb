@@ -39,6 +39,7 @@ RSpec.describe SnakesNLadders do
 
   context "Game Play" do
     let(:game) { SnakesNLadders.new(dice, :X, :Y, {X: Game::Position.of(4), Y: Game::Position.of(11), current_player: :Y}) }
+    
     it 'players will take turns alternatively' do
       allow(dice).to receive(:roll).and_return(3)
       game.play
@@ -60,16 +61,22 @@ RSpec.describe SnakesNLadders do
     end
 
     it 'player shall move according to the number rolled from the current position' do
-      allow(dice).to receive(:roll).and_return(4)
+      allow(dice).to receive(:roll).and_return(3)
       game.play
-      expect(game.position_of(:Y)).to eq(Game::Position.of(15))
+      expect(game.position_of(:Y)).to eq(Game::Position.of(14))
       game.play
-      expect(game.position_of(:X)).to eq(Game::Position.of(8))
+      expect(game.position_of(:X)).to eq(Game::Position.of(7))
     end
     it 'player is taken to top of the ladder if he lands at the bottom of a ladder' do
-      # expect(position_of(:Y)).to be(Game::Position.of())
+      allow(dice).to receive(:roll).and_return(5)
+      game.play
+      expect(game.position_of(:Y)).to eq(Game::Position.of(29))
     end
-    it 'player is taken to the bottom of the chute if he lands on top of a chute' 
+    it 'player is taken to the bottom of the chute if he lands on top of a chute' do
+      allow(dice).to receive(:roll).and_return(4)
+      game.play
+      expect(game.position_of(:Y)).to eq(Game::Position.of(7))
+    end
   end
   
   it 'player who reaches 100 is the winner'

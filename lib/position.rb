@@ -30,6 +30,9 @@ module Game
       self.number > another.number
     end
 
+    # def has_snakes_or_ladders?
+    #   SnakesNLadders.snakes_and_ladders.keys.any?{ |source| of(source) == self }
+    # end
 
     NONE = Position.new(0, 0)
 
