@@ -1,5 +1,4 @@
 require 'byebug'
-# require_relative '/home/robin/git/snakes-and-ladders/lib/snakesladders.rb'
 module Game
   class Position
     attr_reader :x, :y
@@ -8,12 +7,16 @@ module Game
       @y = y
     end
 
-    def ==(position)
+    def eql?(position)
       (@x == position.x && @y == position.y)
     end
 
+    def ==(position)
+      self.eql?(position)
+    end
+
     def self.of(number)
-      Position.new(number / 10, number % 10)
+      self.new(number / 10, number % 10)
     end
 
     def add(delta)
@@ -21,6 +24,9 @@ module Game
       Position.of(aggregate)
     end
 
+    def hash
+      13 * @x * @y
+    end
 
     def number
       x * 10 + y
@@ -30,12 +36,9 @@ module Game
       self.number > another.number
     end
 
-    # def has_snakes_or_ladders?
-    #   SnakesNLadders.snakes_and_ladders.keys.any?{ |source| of(source) == self }
-    # end
-
     NONE = Position.new(0, 0)
-
+    FIRST = Position.new(0, 1)
+    WIN = Position.new(10, 0)
 
   end
 end
