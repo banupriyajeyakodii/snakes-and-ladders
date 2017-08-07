@@ -78,8 +78,18 @@ RSpec.describe SnakesNLadders do
       expect(game.position_of(:Y)).to eq(Game::Position.of(7))
     end
   end
-  
-  it 'player who reaches 100 is the winner'
+  context 'Win Scenario' do
+    let(:game) { SnakesNLadders.new(dice, :X, :Y, {X: Game::Position.of(74), Y: Game::Position.of(98), current_player: :Y}) }
+    it 'player who reaches 100 is the winner' do 
+      game.add_listener { |event|
+        expect(event).to be_a(WinEvent)
+        expect(event.winner).to be(:Y)
+      }
+      allow(dice).to receive(:roll).and_return(2)
+      game.play
+      
+    end
+  end
   
 
 end

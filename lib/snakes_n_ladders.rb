@@ -16,23 +16,29 @@ class SnakesNLadders
   attr_reader :current_player, :dice
 
   def play
-    outcome = dice.roll()
-    if (position_of(current_player) > Game::Position::NONE) 
-      move(current_player, outcome) 
-    else  
-      move(current_player, outcome) if(outcome == 1)
+    unless game_finished?
+      outcome = dice.roll()
+      if (position_of(current_player) > Game::Position::NONE) 
+        move(current_player, outcome) 
+      else  
+        move(current_player, outcome) if(outcome == 1)
+      end
+      check_if_win
+      change_player() if(outcome != 6)
     end
-    change_player() if(outcome != 6)
   end
 
   def position_of(player)
     @player_positions[player]
   end
 
-  # def check(&)
-  #    = 
-  # end
+  def add_listener(&observer)
+    @observer = observer
+  end
 
+  def game_finished?
+    check_if_win()
+  end
 
   private
   def change_player
@@ -64,6 +70,19 @@ class SnakesNLadders
     move(current_player, 0)
   end
 
+  def check_if_win
+    is_win = (position_of(current_player) == Game::Position.of(100))
+    @observer.call(WinEvent.new(current_player)) if(is_win)
+    is_win
+  end
+
   attr_reader :players
 
+end
+
+class WinEvent
+  def initialize(winner)
+    @winner = winner
+  end
+  attr_reader :winner
 end
