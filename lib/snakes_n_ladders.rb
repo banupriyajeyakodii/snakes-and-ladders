@@ -1,3 +1,4 @@
+require_relative '/home/robin/git/snakes-and-ladders/lib/position.rb'
 require 'observer'
 class SnakesNLadders
   include Observable
@@ -63,3 +64,5 @@ class SnakesNLadders
   end
   attr_reader :players
 end
+a = SnakesNLadders.new(1, :X, :Y)
+p a.inspect

@@ -1,4 +1,3 @@
-require 'byebug'
 module Game
   class Position
     attr_reader :x, :y
@@ -25,7 +24,7 @@ module Game
     end
 
     def hash
-      13 * @x * @y
+      @x.hash
     end
 
     def number
@@ -37,6 +36,7 @@ module Game
     end
 
     NONE = Position.new(0, 0)
+
     FIRST = Position.new(0, 1)
     WIN = Position.new(10, 0)
 
